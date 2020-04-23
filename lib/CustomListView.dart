@@ -51,12 +51,6 @@ class _CustomListViewState extends State<CustomListView> {
                         index: index,
                         value: widget.calc.saldoDevedor[index+1].abs(),
                       ),
-                      // Image.network(
-                      //   "https://i2.wp.com/www.institutoniemeyer.org/wp-content/uploads/2018/09/teste.png?w=400",
-                      //   alignment: Alignment.center,
-                      //   height: 100,
-                      //   width: 100,
-                      // ),
                     ],
                   ),
                 ),

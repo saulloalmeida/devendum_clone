@@ -9,6 +9,12 @@ part of 'calc_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CalcStore on _CalcStoreBase, Store {
+  Computed<bool> _$ehValidoComputed;
+
+  @override
+  bool get ehValido =>
+      (_$ehValidoComputed ??= Computed<bool>(() => super.ehValido)).value;
+
   final _$valorParaFinanciarAtom =
       Atom(name: '_CalcStoreBase.valorParaFinanciar');
 
@@ -134,20 +140,20 @@ mixin _$CalcStore on _CalcStoreBase, Store {
       ActionController(name: '_CalcStoreBase');
 
   @override
-  dynamic setValorParaFinanciar(String value) {
+  dynamic descobrirValorParcela() {
     final _$actionInfo = _$_CalcStoreBaseActionController.startAction();
     try {
-      return super.setValorParaFinanciar(value);
+      return super.descobrirValorParcela();
     } finally {
       _$_CalcStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic setTaxaJuros(String value) {
+  dynamic setValorParaFinanciar(String value) {
     final _$actionInfo = _$_CalcStoreBaseActionController.startAction();
     try {
-      return super.setTaxaJuros(value);
+      return super.setValorParaFinanciar(value);
     } finally {
       _$_CalcStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -164,10 +170,10 @@ mixin _$CalcStore on _CalcStoreBase, Store {
   }
 
   @override
-  dynamic descobrirValorParcela() {
+  dynamic setTaxaJuros(String value) {
     final _$actionInfo = _$_CalcStoreBaseActionController.startAction();
     try {
-      return super.descobrirValorParcela();
+      return super.setTaxaJuros(value);
     } finally {
       _$_CalcStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -194,36 +200,6 @@ mixin _$CalcStore on _CalcStoreBase, Store {
   }
 
   @override
-  dynamic descobrirJurosMes() {
-    final _$actionInfo = _$_CalcStoreBaseActionController.startAction();
-    try {
-      return super.descobrirJurosMes();
-    } finally {
-      _$_CalcStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic descobrirAmortizacao() {
-    final _$actionInfo = _$_CalcStoreBaseActionController.startAction();
-    try {
-      return super.descobrirAmortizacao();
-    } finally {
-      _$_CalcStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic descobrirSaldoDevedor() {
-    final _$actionInfo = _$_CalcStoreBaseActionController.startAction();
-    try {
-      return super.descobrirSaldoDevedor();
-    } finally {
-      _$_CalcStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic gerarTabela() {
     final _$actionInfo = _$_CalcStoreBaseActionController.startAction();
     try {
@@ -236,7 +212,7 @@ mixin _$CalcStore on _CalcStoreBase, Store {
   @override
   String toString() {
     final string =
-        'valorParaFinanciar: ${valorParaFinanciar.toString()},taxaJuros: ${taxaJuros.toString()},prazo: ${prazo.toString()},jurosMes: ${jurosMes.toString()},amortizacao: ${amortizacao.toString()},saldoDevedor: ${saldoDevedor.toString()},valorParcela: ${valorParcela.toString()}';
+        'valorParaFinanciar: ${valorParaFinanciar.toString()},taxaJuros: ${taxaJuros.toString()},prazo: ${prazo.toString()},jurosMes: ${jurosMes.toString()},amortizacao: ${amortizacao.toString()},saldoDevedor: ${saldoDevedor.toString()},valorParcela: ${valorParcela.toString()},ehValido: ${ehValido.toString()}';
     return '{$string}';
   }
 }

@@ -1,6 +1,8 @@
 import 'package:devendum_clone/CustomListView.dart';
 import 'package:devendum_clone/calc_store.dart';
+import 'package:devendum_clone/card.dart';
 import 'package:flutter/material.dart';
+import 'package:money2/money2.dart';
 
 class TwoRoute extends StatefulWidget {
   final CalcStore calc;
@@ -11,6 +13,8 @@ class TwoRoute extends StatefulWidget {
 }
 
 class _TwoRouteState extends State<TwoRoute> {
+  Currency brl = Currency.create('BRL', 2,
+      symbol: 'R\$ ', invertSeparators: true, pattern: "S.###,00");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,11 +22,8 @@ class _TwoRouteState extends State<TwoRoute> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(
-              top: 40,
-              left: 20,
-              right: 20,
-            ),
+            padding:
+                const EdgeInsets.only(top: 40, left: 20, right: 20, bottom: 20),
             child: Card(
               color: Colors.indigo[300],
               elevation: 10,
@@ -32,43 +33,43 @@ class _TwoRouteState extends State<TwoRoute> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Text(
-                    "Resultado",
+                    "Resultado - Resumo",
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
-                    "Valor a Financiar: R\$ ${widget.calc.totalJuros().toStringAsFixed(2)}",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  CardInfo(
+                    primeiroTexto: "Valor a Financiar:",
+                    value: widget.calc.valorParaFinanciar,
                   ),
-                  Text(
-                    "Valor da Parcela: R\$ ${widget.calc.totalPagoPeriodo().toStringAsFixed(2)}",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  CardInfo(
+                    primeiroTexto: "Total de Juros:",
+                    value: widget.calc.totalJuros(),
                   ),
-                  Text(
-                    "Valor da Parcela: R\$ ${widget.calc.valorParcela} em ${widget.calc.prazo.toInt()} meses.",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  CardInfo(
+                    primeiroTexto: "Valor da Parcela:",
+                    value: widget.calc.valorParcela,
                   ),
-                  Text(
-                    "Forma de amortização: Price",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  CardInfo(
+                    primeiroTexto: "Taxa de Juros:",
+                    segundoTexto: "${widget.calc.taxaJuros*100} % a.m.",
+                  ),
+                  CardInfo(
+                    primeiroTexto: "Prazo:",
+                    segundoTexto: "${widget.calc.prazo.toInt()} Meses",
+                  ),
+                  CardInfo(
+                    primeiroTexto: "Forma de amortização:",
+                    segundoTexto: "Price",
                   ),
                 ],
               ),
             ),
+          ),
+          Text(
+            "Detalhes - Mês a Mês",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           Expanded(child: CustomListView(calc: widget.calc)),
           RaisedButton.icon(

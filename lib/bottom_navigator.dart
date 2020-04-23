@@ -1,5 +1,5 @@
+import 'package:devendum_clone/about.dart';
 import 'package:devendum_clone/one_route.dart';
-import 'package:devendum_clone/two_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,7 +12,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   int _currentIndex = 0;
   final _tabs = [
     OneRoute(),
-    TwoRoute(),
+    About(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -33,14 +33,9 @@ class _BottomNavigatorState extends State<BottomNavigator> {
             // ),
             ListTile(
               title: Text('Home'),
+              trailing: Icon(Icons.home),
               onTap: () {
                 Navigator.pushNamed(context, "/");
-              },
-            ),
-            ListTile(
-              title: Text('Second'),
-              onTap: () {
-                Navigator.pushNamed(context, "/two");
               },
             ),
             ListTile(
@@ -71,7 +66,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.local_activity),
-              title: Text("Second"),
+              title: Text("Sobre"),
               backgroundColor: Colors.white,
             ),
           ]),

@@ -2,6 +2,8 @@ import 'package:devendum_clone/calc_store.dart';
 import 'package:devendum_clone/two_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class OneRoute extends StatefulWidget {
   @override
@@ -10,6 +12,11 @@ class OneRoute extends StatefulWidget {
 
 class _OneRouteState extends State<OneRoute> {
   CalcStore calcStore = CalcStore();
+  var valorAFinanciarController = new MoneyMaskedTextController(
+      leftSymbol: 'R\$ ', decimalSeparator: ',', thousandSeparator: '.');
+  var jurosController = new MoneyMaskedTextController(
+      rightSymbol: '% a.m. ', decimalSeparator: ',', thousandSeparator: '.');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,16 +38,16 @@ class _OneRouteState extends State<OneRoute> {
           Padding(
             padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
             child: TextField(
+              controller: valorAFinanciarController,
               keyboardType: TextInputType.number,
-              onChanged: calcStore.setValorParaFinanciar,
               decoration: InputDecoration(labelText: "Valor a financiar"),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 30, right: 30, bottom: 10),
             child: TextField(
+              controller: jurosController,
               keyboardType: TextInputType.number,
-              onChanged: calcStore.setTaxaJuros,
               decoration: InputDecoration(labelText: "Taxa de juros ao mês"),
             ),
           ),
@@ -48,29 +55,39 @@ class _OneRouteState extends State<OneRoute> {
             padding: const EdgeInsets.only(left: 30, right: 30, bottom: 10),
             child: TextField(
               keyboardType: TextInputType.number,
+              maxLength: 3,
               onChanged: calcStore.setPrazo,
-              decoration: InputDecoration(labelText: "Prazo"),
+              decoration: InputDecoration(labelText: "Prazo (Mês)"),
             ),
           ),
-          RaisedButton.icon(
-            onPressed: () {
-              calcStore.gerarTabela();
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return TwoRoute(calcStore);
-              }));
-            },
-            color: Colors.blueGrey[800],
-            icon: Icon(
-              AntDesign.calculator,
-              color: Colors.white,
-            ),
-            label: Text(
-              "Simular Financiamento",
-              style: TextStyle(
+          Observer(builder: (_) {
+            return RaisedButton.icon(
+              onPressed: calcStore.prazo == null
+                  ? null
+                  : () {
+                      calcStore.setValorParaFinanciar(
+                          valorAFinanciarController.numberValue.toString());
+                      calcStore
+                          .setTaxaJuros(jurosController.numberValue.toString());
+                      calcStore.gerarTabela();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return TwoRoute(calcStore);
+                      }));
+                    },
+              color: Colors.blueGrey[800],
+              icon: Icon(
+                AntDesign.calculator,
                 color: Colors.white,
               ),
-            ),
-          ),
+              label: Text(
+                "Simular Financiamento",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            );
+          }),
         ],
       )),
     );
