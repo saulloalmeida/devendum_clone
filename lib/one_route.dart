@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:devendum_clone/calc_store.dart';
 import 'package:devendum_clone/two_route.dart';
 import 'package:flutter/material.dart';
@@ -28,12 +29,20 @@ class _OneRouteState extends State<OneRoute> {
             height: 20,
           ),
           Center(
-            child: Image.network(
-              "https://image.flaticon.com/icons/png/512/124/124065.png",
-              alignment: Alignment.center,
-              width: 200,
-              height: 200,
-            ),
+            child: CachedNetworkImage(
+            placeholder: (context, url) => new CircularProgressIndicator(),
+            imageUrl: "https://image.flaticon.com/icons/png/512/124/124065.png",
+            errorWidget: (context, url, error) => new Icon(Icons.error),
+            height: 200,
+            width: 200,
+
+          ),
+            //  Image.network(
+            //   "https://image.flaticon.com/icons/png/512/124/124065.png",
+            //   alignment: Alignment.center,
+            //   width: 200,
+            //   height: 200,
+            // ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
